@@ -42,7 +42,10 @@ public class HabitoController {
 
     @PostMapping
     public Habito create(@RequestBody Habito habito) {
-
+        if (habito.getId() != 0) {
+            // new Exception() <- MAL. Es genérica, checked, no da info
+            throw new IntentoModificacionSecurityException("Has tratado de modificar mediante creación");
+        }
         habito = habitoService.create(habito);
 
         return habito;
@@ -50,7 +53,7 @@ public class HabitoController {
 
     @PutMapping
     public void update(@RequestBody Habito habito) {
-
+        habitoService.update(habito);
     }
 
     @DeleteMapping("/{id}")

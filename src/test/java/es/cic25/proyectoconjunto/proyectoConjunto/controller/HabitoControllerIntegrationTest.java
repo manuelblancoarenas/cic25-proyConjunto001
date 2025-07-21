@@ -64,8 +64,27 @@ public class HabitoControllerIntegrationTest {
                                 assertTrue(registroRealmenteCreado.isPresent());
                                 
         });
+        }
+        @Test
+        void testCreateIntentandoModificacion() throws Exception {
 
-    }
+                Habito habito = new Habito();
+                habito.setId(3);
+                habito.setNombre("Meditar");
+                habito.setDescripcion("Meditar cada mañana");
+                habito.setEstado(true);
+                habito.setCategoria(Categoria.SALUD);
+
+                // ObjectMapper objectMapper = new ObjectMapper();
+                String habitoJson = objectMapper.writeValueAsString(habito);
+
+                mockMvc.perform(post("/habito")
+                                .contentType("application/json")
+                                .content(habitoJson))
+                                .andExpect(status().isBadRequest());
+                                
+                }
+
 
     @Test
     void testGet() throws Exception {
